@@ -127,4 +127,4 @@ ai_prediction = ai_core.predict(ai_input)
 if ai_prediction[0] == 0:
     st.success("✅ MÔ HÌNH ML ĐÁNH GIÁ: Hệ thống hiện tại đang an toàn (Safe State). Cấu hình phân phối tài nguyên hợp lý.")
 else:
-    st.error("⚠️ AI PHÂN TÍCH CẢNH BÁO: Phân phối tài nguyên tự do quá ít trong khi hàng chờ quá tải! Nguy cơ sập hệ thống (Deadlock) cực kỳ cao.")git add .
+    st.error("⚠️ AI PHÂN TÍCH CẢNH BÁO: Phân phối tài nguyên tự do quá ít trong khi hàng chờ quá tải! Nguy cơ sập hệ thống (Deadlock) cực kỳ cao.")
