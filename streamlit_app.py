@@ -106,4 +106,25 @@ with col2:
     fig, ax = plt.subplots(figsize=(6, 4.5))
     node_positions = {"P0": (0, 1), "P1": (2, 1), "P2": (4, 1), "R0": (0, 0), "R1": (2, 0), "R2": (4, 0)}
     
-    color_map =
+    color_map = ["#FED7D7" if node in ["P0", "P1", "R0", "R1"] else "#DEF7EC" for node in RAG.nodes()]
+    edge_color_map = ["#E53E3E" if edge in [("P0","R1"),("R1","P1"),("P1","R0"),("R0","P0")] else "#9CA3AF" for edge in RAG.edges()]
+    
+    nx.draw(RAG, node_positions, ax=ax, with_labels=True, node_size=1400, 
+            node_color=color_map, edge_color=edge_color_map, width=2.5, arrowsize=18, font_weight="bold")
+    
+    st.pyplot(fig)
+    st.caption("🔴 Cạnh màu đỏ thể hiện các yêu cầu đang bị giữ và kẹt xoay vòng gây nguy hiểm (Circular Wait).")
+
+# --- 5. PANEL HIỂN THỊ KẾT QUẢ AI DỰ BÁO XUỐNG DƯỚI CÙNG (DỰ BÁO REAL-TIME) ---
+st.write("---")
+st.markdown("### 📊 Trạng thái phân tích rủi ro từ Trí Tuệ Nhân Tạo (Scikit-learn)")
+
+# Tạo vector đầu vào từ cấu hình hiện tại của các slider
+ai_input = np.array([[slider_r0, slider_r1, slider_r2, input_wait]])
+ai_prediction = ai_core.predict(ai_input)
+
+# Hiển thị kết quả ngay lập tức khi phát hiện thay đổi dữ liệu đầu vào
+if ai_prediction[0] == 0:
+    st.success("✅ MÔ HÌNH ML ĐÁNH GIÁ: Hệ thống hiện tại đang an toàn (Safe State). Cấu hình phân phối tài nguyên hợp lý.")
+else:
+    st.error("⚠️ AI PHÂN TÍCH CẢNH BÁO: Phân phối tài nguyên tự do quá ít trong khi hàng chờ quá tải! Nguy cơ sập hệ thống (Deadlock) cực kỳ cao.")git add .
